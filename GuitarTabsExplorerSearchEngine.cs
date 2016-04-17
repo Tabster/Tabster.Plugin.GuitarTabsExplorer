@@ -25,7 +25,7 @@ namespace GuitarTabsExplorer
 
         public string Name
         {
-            get { return "GuitarTabsExplorer.com"; }
+            get { return "Guitar Tabs Explorer"; }
         }
 
         public Uri Homepage { get; private set; }
