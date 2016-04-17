@@ -1,0 +1,29 @@
+version: 1.0.0.{build}
+os: Visual Studio 2015
+configuration: Release
+platform: Any CPU
+assembly_info:
+  patch: true
+  file: AssemblyInfo.*
+  assembly_version: '{version}'
+  assembly_file_version: '{version}'
+  assembly_informational_version: '{version}-$(APPVEYOR_REPO_COMMIT)'
+before_build:
+- ps: nuget restore
+build:
+  project: GuitarTabsExplorer.sln
+after_build:
+- ps: >-
+    .\Deploy\archive.ps1
+artifacts:
+- path: GuitarTabsExplorer.zip
+  name: archive
+deploy:
+  - provider: GitHub
+    auth_token:
+      secure: SD+1NPa8QJ8nAT9A4wsEog2pedpT8KaQebkDVB9mHbVze6nYABjcVzDa/5MXK0ZW
+    artifact: GuitarTabsExplorer.zip
+    draft: true
+    on:
+      branch: master
+      appveyor_repo_tag: true
